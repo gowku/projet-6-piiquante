@@ -1,4 +1,7 @@
 const express = require("express");
+
+//ajoute des sécurités helmet
+const helmet = require("helmet");
 const morgan = require("morgan");
 const bodyParser = require(`body-parser`);
 const mongoose = require("mongoose");
@@ -16,6 +19,8 @@ mongoose
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 const app = express();
+
+app.use(helmet());
 
 app.use(morgan("dev"));
 

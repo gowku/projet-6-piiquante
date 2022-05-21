@@ -107,8 +107,7 @@ exports.sauceLiked = (req, res, next) => {
           .then(() => res.status(201).json({ message: "user like 1" }))
 
           .catch((error) => res.status(400).json({ error }));
-      }
-      if (el.usersLiked.includes(userId) && req.body.like == 0) {
+      } else if (el.usersLiked.includes(userId) && req.body.like == 0) {
         // si userId est pas dans usersdislike et qu on envoie 0
         console.log("je suis a 0");
 
@@ -121,8 +120,7 @@ exports.sauceLiked = (req, res, next) => {
         )
           .then(() => res.status(201).json({ message: "user like 0" }))
           .catch((error) => res.status(400).json({ error }));
-      }
-      if (!el.usersDisliked.includes(userId) && req.body.like == -1) {
+      } else if (!el.usersDisliked.includes(userId) && req.body.like == -1) {
         // si userId n'est pas dans usersdislike et qu on envoie -1
         console.log("je suis a -1");
         Sauce.updateOne(
@@ -134,8 +132,7 @@ exports.sauceLiked = (req, res, next) => {
         )
           .then(() => res.status(201).json({ message: "user like -1" }))
           .catch((error) => res.status(400).json({ error }));
-      }
-      if (el.usersDisliked.includes(userId) && req.body.like == 0) {
+      } else if (el.usersDisliked.includes(userId) && req.body.like == 0) {
         // si userId est pas dans usersdislike et qu on envoie 0
         console.log("je suis a 0 ici");
         Sauce.updateOne(
