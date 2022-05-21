@@ -1,5 +1,5 @@
 require("dotenv").config();
-console.log(process.env.EMAIL);
+// console.log(process.env.EMAIL);
 
 const cryptojs = require("crypto-js");
 
@@ -11,14 +11,13 @@ const User = require(`../models/user`);
 exports.signup = (req, res, next) => {
   // chiffrement de l'email
   const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, "${process.env.EMAIL}").toString();
-  console.log("contenue");
-  console.log(cryptojsEmail);
+  // console.log("contenue");
+  // console.log(cryptojsEmail);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
         email: cryptojsEmail,
-        // email: req.body.email,
         password: hash,
       });
       user
@@ -32,8 +31,8 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
   // chiffrement de l'email
   const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, "${process.env.EMAIL}").toString();
-  console.log("contenue");
-  console.log(cryptojsEmail);
+  // console.log("contenue");
+  // console.log(cryptojsEmail);
 
   User.findOne({ email: cryptojsEmail })
     .then((user) => {
@@ -48,7 +47,7 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign({ userId: user._id }, "RANDOM_TOKEN_SECRET", { expiresIn: "24h" }),
+            token: jwt.sign({ userId: user._id }, process.env.TOKEN, { expiresIn: "24h" }),
           });
         })
         .catch((error) => res.status(500).json({ error }));
