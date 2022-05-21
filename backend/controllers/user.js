@@ -1,14 +1,24 @@
+require("dotenv").config();
+console.log(process.env.EMAIL);
+
+const cryptojs = require("crypto-js");
+
 const bcrypt = require(`bcrypt`);
 const jwt = require("jsonwebtoken");
 
 const User = require(`../models/user`);
 
 exports.signup = (req, res, next) => {
+  // chiffrement de l'email
+  const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, "${process.env.EMAIL}").toString();
+  console.log("contenue");
+  console.log(cryptojsEmail);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
-        email: req.body.email,
+        email: cryptojsEmail,
+        // email: req.body.email,
         password: hash,
       });
       user
@@ -20,7 +30,12 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  // chiffrement de l'email
+  const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, "${process.env.EMAIL}").toString();
+  console.log("contenue");
+  console.log(cryptojsEmail);
+
+  User.findOne({ email: cryptojsEmail })
     .then((user) => {
       if (!user) {
         return res.status(401).json({ error: "Utilisateur non trouvé !" });
