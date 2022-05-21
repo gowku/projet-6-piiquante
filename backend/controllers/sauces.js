@@ -1,6 +1,6 @@
 const Sauce = require("../models/sauce");
 const fs = require(`fs`);
-const sauce = require("../models/sauce");
+// const sauce = require("../models/sauce");
 const e = require("express");
 
 exports.createSauce = (req, res, next) => {
