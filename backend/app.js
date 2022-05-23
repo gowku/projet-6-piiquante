@@ -1,7 +1,7 @@
 const express = require("express");
 
 //ajoute des sécurités helmet
-// const helmet = require("helmet");
+const helmet = require("helmet");
 const morgan = require("morgan");
 const bodyParser = require(`body-parser`);
 const mongoose = require("mongoose");
@@ -20,7 +20,14 @@ mongoose
 
 const app = express();
 
-// app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "example.com"],
+      "style-src": null,
+    },
+  })
+);
 
 app.use(morgan("dev"));
 
