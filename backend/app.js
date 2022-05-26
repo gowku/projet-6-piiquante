@@ -1,5 +1,8 @@
 const express = require("express");
 
+require("dotenv").config();
+// console.log(process.env.DB_USERNAME);
+
 //ajoute des sécurités helmet
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -11,10 +14,13 @@ const saucesRoutes = require("./routes/sauces");
 const userRoutes = require(`./routes/user`);
 
 mongoose
-  .connect("mongodb+srv://ju:ju@cluster0.ablrv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    `mongodb+srv://${process.env.DB_USERNAME}:${process.env.BD_PASSWORD}@cluster0.ablrv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 

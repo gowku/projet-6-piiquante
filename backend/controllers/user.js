@@ -10,7 +10,7 @@ const User = require(`../models/user`);
 
 exports.signup = (req, res, next) => {
   // chiffrement de l'email
-  const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, "${process.env.EMAIL}").toString();
+  const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, `${process.env.EMAIL}`).toString();
   // console.log("contenue");
   // console.log(cryptojsEmail);
   bcrypt
@@ -30,7 +30,7 @@ exports.signup = (req, res, next) => {
 
 exports.login = (req, res, next) => {
   // chiffrement de l'email
-  const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, "${process.env.EMAIL}").toString();
+  const cryptojsEmail = cryptojs.HmacSHA256(req.body.email, `${process.env.EMAIL}`).toString();
   // console.log("contenue");
   // console.log(cryptojsEmail);
 
