@@ -4,6 +4,8 @@ const fs = require(`fs`);
 const e = require("express");
 
 exports.createSauce = (req, res, next) => {
+  console.log("je suis ici");
+  console.log(req.body.sauce);
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
   const sauce = new Sauce({
@@ -108,7 +110,7 @@ exports.sauceLiked = (req, res, next) => {
 
           .catch((error) => res.status(400).json({ error }));
       } else if (el.usersLiked.includes(userId) && req.body.like == 0) {
-        // si userId est pas dans usersdislike et qu on envoie 0
+        // si userId est dans usersliked et qu on envoie 0
         console.log("je suis a 0");
 
         Sauce.updateOne(
